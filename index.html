@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InfoTrust AI - Fact Checking</title>
+
+  <!-- Tailwind + DaisyUI CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- AlpineJS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBrand: '#2F3E8F'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+  <!-- NAVBAR -->
+<!-- NAVBAR -->
+<div class="navbar bg-base-100 shadow-md px-8">
+
+  <div class="flex-1 flex items-center gap-3">
+
+    <!-- Logo Image -->
+    <img src="assets/logo.jpeg" 
+         alt="InfoTrust AI Logo"
+         class="w-12 h-12 object-contain">
+
+    <!-- Texte -->
+    <span class="text-2xl font-bold">
+      <span class="text-blue-900">InfoTrust</span>
+      <span class="text-green-500">AI</span>
+    </span>
+
+  </div>
+
+  <div class="flex-none hidden md:flex">
+    <ul class="menu menu-horizontal px-1 text-base">
+      <li><a class="text-blue-900 font-semibold">Accueil</a></li>
+      <li><a>Comment ça marche</a></li>
+      <li><a>Contact</a></li>
+    </ul>
+  </div>
+
+</div>
+
+  <!-- HERO SECTION -->
+  <section class="py-16 px-6">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Titre -->
+      <h1 class="text-5xl font-extrabold text-primaryBrand mb-12">
+        FACT CHECKING
+      </h1>
+
+      <!-- CARD PRINCIPALE -->
+      <div 
+        x-data="factChecker()" 
+        class="card bg-base-100 shadow-xl p-10">
+
+        <!-- Zone de texte beaucoup plus grande -->
+        <textarea
+          x-model="userInput"
+          placeholder="Entrer le texte ou l’URL à vérifier"
+          class="textarea textarea-bordered w-full h-56 text-lg resize-none mb-6">
+        </textarea>
+
+        <div class="flex flex-col md:flex-row gap-4">
+
+          <!-- Bouton Analyser -->
+          <a href="result.html" 
+           class="btn bg-blue-900 hover:bg-indigo-800 text-white text-lg px-10">
+          ANALYSER
+        </a>
+
+          <!-- Bouton Résultats -->
+          <button 
+            class="btn btn-outline text-lg">
+            RÉSULTATS
+            <span x-show="loading" class="loading loading-spinner loading-sm ml-2"></span>
+          </button>
+
+        </div>
+
+        <!-- RESULTAT -->
+        <div 
+          x-show="result"
+          x-transition
+          class="mt-8 p-6 rounded-lg bg-slate-50 border">
+
+          <h2 class="text-xl font-bold mb-2">Résultat :</h2>
+
+          <p class="text-lg"
+             :class="result === 'Vrai' ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'">
+            <span x-text="result"></span>
+          </p>
+
+          <p class="mt-2 text-gray-600">
+            <span x-text="explanation"></span>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="pb-20 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+
+      <div class="card bg-base-100 shadow-md p-8 text-center">
+        <h3 class="text-xl font-bold mb-3">Analyse en temps réel</h3>
+        <p class="text-gray-600">
+          Vérifie instantanément si une information est fiable.
+        </p>
+      </div>
+
+      <div class="card bg-base-100 shadow-md p-8 text-center">
+        <h3 class="text-xl font-bold mb-3">Rapports impartiaux</h3>
+        <p class="text-gray-600">
+          Une analyse transparente basée sur des sources multiples.
+        </p>
+      </div>
+
+      <div class="card bg-base-100 shadow-md p-8 text-center">
+        <h3 class="text-xl font-bold mb-3">Combat la désinformation</h3>
+        <p class="text-gray-600">
+          Aide à réduire la propagation des fake news.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ALPINE JS LOGIC -->
+  <script>
+    function factChecker() {
+      return {
+        userInput: '',
+        loading: false,
+        result: '',
+        explanation: '',
+
+        analyser() {
+          if (!this.userInput) {
+            alert("Veuillez entrer un texte à analyser.");
+            return;
+          }
+
+          this.loading = true;
+          this.result = '';
+          this.explanation = '';
+
+          // Simulation IA (à connecter à ton backend plus tard)
+          setTimeout(() => {
+            this.loading = false;
+
+            // Simulation simple
+            if (this.userInput.toLowerCase().includes("terre plate")) {
+              this.result = "Faux";
+              this.explanation = "Les preuves scientifiques confirment que la Terre est sphérique.";
+            } else {
+              this.result = "Vrai";
+              this.explanation = "Aucune contradiction majeure détectée selon l'analyse IA.";
+            }
+          }, 2000);
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
